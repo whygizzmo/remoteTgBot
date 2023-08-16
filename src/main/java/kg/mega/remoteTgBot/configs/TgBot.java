@@ -1,5 +1,6 @@
 package kg.mega.remoteTgBot.configs;
 
+import kg.mega.remoteTgBot.services.MessageService;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,18 +10,26 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class TgBot extends TelegramLongPollingBot {
     BotConfig botConfig;
+   final MessageService messageService;
 
 
-    public TgBot(BotConfig botConfig) {
+    public TgBot(BotConfig botConfig, MessageService messageService) {
         this.botConfig = botConfig;
+        this.messageService = messageService;
     }
 
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println(update.getMessage().getFrom().getId());
-        System.out.println(update.getMessage().getText());
-        System.out.println(update.getMessage().getFrom().getUserName());
-        System.out.println(update.getMessage());
+
+
+        if (update.getMessage().getText().contains("/удаленка")){
+            messageService.checkRemoteMessage(update);
+        }
+
+//        System.out.println(update.getMessage().getFrom().getId());
+//        System.out.println(update.getMessage().getText());
+//        System.out.println(update.getMessage().getFrom().getUserName());
+//        System.out.println(update.getMessage());
     }
 
     @Override

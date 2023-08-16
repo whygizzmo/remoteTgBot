@@ -17,8 +17,8 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    String message;
-    @ManyToOne
+    String textMessage;
+    @ManyToOne()
     Employee employee;
     @CreationTimestamp
     Date date;

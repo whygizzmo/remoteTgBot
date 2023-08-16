@@ -20,4 +20,8 @@ public class Employee {
     Long telegramId;
     String userName;
 
+    public Employee(Long telegramId, String userName) {
+        this.telegramId = telegramId;
+        this.userName = userName;
+    }
 }
