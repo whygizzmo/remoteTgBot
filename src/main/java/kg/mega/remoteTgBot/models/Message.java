@@ -19,7 +19,7 @@ public class Message {
     Long id;
     String message;
     @ManyToOne
-    User user;
+    Employee employee;
     @CreationTimestamp
     Date date;
 }

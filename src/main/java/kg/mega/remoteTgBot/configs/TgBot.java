@@ -10,10 +10,17 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class TgBot extends TelegramLongPollingBot {
     BotConfig botConfig;
 
+
+    public TgBot(BotConfig botConfig) {
+        this.botConfig = botConfig;
+    }
+
     @Override
     public void onUpdateReceived(Update update) {
-        // update.getMessage().getFrom().getId();       айди и юзернейм чтобы не забыть откуда брать
-        //update.getMessage().getFrom().getUserName();
+        System.out.println(update.getMessage().getFrom().getId());
+        System.out.println(update.getMessage().getText());
+        System.out.println(update.getMessage().getFrom().getUserName());
+        System.out.println(update.getMessage());
     }
 
     @Override
