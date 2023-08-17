@@ -1,7 +1,7 @@
 package kg.mega.remoteTgBot.services.impl;
 
-import kg.mega.remoteTgBot.models.Employee;
-import kg.mega.remoteTgBot.models.Message;
+import kg.mega.remoteTgBot.models.entities.Employee;
+import kg.mega.remoteTgBot.models.entities.Message;
 import kg.mega.remoteTgBot.repos.EmployeeRepository;
 import kg.mega.remoteTgBot.repos.MessageRepository;
 import kg.mega.remoteTgBot.services.MessageService;
@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class MessageServiceImpl implements MessageService {
@@ -45,13 +46,28 @@ public class MessageServiceImpl implements MessageService {
 
 
         String fileName = "C:\\Users\\дима\\Desktop\\mega\\remoteTgBot\\src\\main\\resources\\data.txt";
-        String content = "Сообщение от польз-ля " + employee.getUserName() + ": " + message.getTextMessage() + "\nдата: " + message.getDate()+"\n\n";
+        String content = "Сообщение от польз-ля " + employee.getUserName() + ": " + message.getTextMessage() + "\nдата: " + message.getDate() + "\n\n";
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName,true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
             writer.write(content);
             System.out.println("Текст записан в файл успешно.");
         } catch (IOException e) {
             System.err.println("Ошибка при записи в файл: " + e.getMessage());
         }
     }
+
+    @Override
+    public String getAllMessagesForMonthFromEmployee(long employeeId) {
+        String allMessageInString = "";
+
+        List<Message> messageList = messageRepository.findAllByEmployeeId(employeeId);
+
+        for (Message m : messageList) {
+            allMessageInString += m.getDate()+"  ||  "+m.getTextMessage()+"\n";
+        }
+
+        return allMessageInString;
+    }
+
+
 }

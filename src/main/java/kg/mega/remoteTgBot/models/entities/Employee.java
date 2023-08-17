@@ -1,4 +1,4 @@
-package kg.mega.remoteTgBot.models;
+package kg.mega.remoteTgBot.models.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

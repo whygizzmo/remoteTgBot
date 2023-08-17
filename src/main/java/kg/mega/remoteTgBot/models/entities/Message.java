@@ -1,9 +1,9 @@
-package kg.mega.remoteTgBot.models;
+package kg.mega.remoteTgBot.models.entities;
 
 import jakarta.persistence.*;
+import kg.mega.remoteTgBot.models.entities.Employee;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
