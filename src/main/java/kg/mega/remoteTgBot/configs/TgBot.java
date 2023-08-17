@@ -23,7 +23,8 @@ public class TgBot extends TelegramLongPollingBot {
 
 
         if (update.getMessage().getText().contains("/удаленка")){
-            messageService.checkRemoteMessage(update);
+            messageService.saveInDB(update);
+           // messageService.saveInFile
         }
 
 //        System.out.println(update.getMessage().getFrom().getId());

@@ -20,7 +20,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message checkRemoteMessage(Update update) {
+    public Message saveInDB(Update update) {
         Message message = new Message();
         Employee employee = employeeRepository.findByUserName(update.getMessage().getFrom().getUserName());
         if (employee == null){
