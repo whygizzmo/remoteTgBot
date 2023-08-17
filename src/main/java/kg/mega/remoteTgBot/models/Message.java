@@ -20,6 +20,6 @@ public class Message {
     String textMessage;
     @ManyToOne()
     Employee employee;
-    @CreationTimestamp
-    Date date;
+
+    Date date = new Date();
 }

@@ -8,6 +8,10 @@ import kg.mega.remoteTgBot.services.MessageService;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 @Service
 public class MessageServiceImpl implements MessageService {
 
@@ -22,14 +26,32 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public Message saveInDB(Update update) {
         Message message = new Message();
+        //проверка на наличие сотрудника в базе
         Employee employee = employeeRepository.findByUserName(update.getMessage().getFrom().getUserName());
-        if (employee == null){
+        if (employee == null) {
             employee = employeeRepository.save(new Employee(update.getMessage().getFrom().getId(),
-                                                            update.getMessage().getFrom().getUserName()));
+                    update.getMessage().getFrom().getUserName()));
         }
         message.setTextMessage(update.getMessage().getText());
         message.setEmployee(employee);
 
+        //сохранение в файл
+        saveInFile(employee, message);
         return messageRepository.save(message);
+    }
+
+    @Override
+    public void saveInFile(Employee employee, Message message) {
+
+
+        String fileName = "C:\\Users\\дима\\Desktop\\mega\\remoteTgBot\\src\\main\\resources\\data.txt";
+        String content = "Сообщение от польз-ля " + employee.getUserName() + ": " + message.getTextMessage() + "\nдата: " + message.getDate()+"\n\n";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName,true))) {
+            writer.write(content);
+            System.out.println("Текст записан в файл успешно.");
+        } catch (IOException e) {
+            System.err.println("Ошибка при записи в файл: " + e.getMessage());
+        }
     }
 }
